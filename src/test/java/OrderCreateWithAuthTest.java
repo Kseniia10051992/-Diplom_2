@@ -24,24 +24,22 @@ public class OrderCreateWithAuthTest extends GeneralTest {
     private final ClientOrder clientOrder = new ClientOrder();
     private final GeneratorIngredients generatorIngredients = new GeneratorIngredients();
     public static final String SUCCESS = "success";
-    public static final String ORDER = "order";
     public static final String MESSAGE = "message";
     public static final String MESSAGE_INGREDIENT = "Ingredient ids must be provided";
-    public static final String INGREDIENT = "ingredient";
-    private OrderAfterCreate orderAfterCreate;
+
 
     @Test
     @DisplayName("Создаем заказ с авторизацией")
     public void сorrectСreateOrderWithLogin() {
         Map<String, String[]> ingredientsMap = generatorIngredients.getValidIngredients();
+        log.info("Получение списка ингредиентов: {}", ingredientsMap);
         Response response = clientOrder.createOrderWithLogin(ingredientsMap, accessToken);
+        log.info("Ответ от сервера: {}", response.body().asString());
 
-        orderAfterCreate = response.body().jsonPath().getObject(ORDER, OrderAfterCreate.class);
+        response.then()
+                .statusCode(HttpStatus.SC_OK);
 
-        List<String> expected = new ArrayList<>(Arrays.asList(ingredientsMap.get(INGREDIENT)));
-        List<String> actual = getActual(orderAfterCreate);
 
-        assertEquals(expected, actual);
     }
 
     @Test

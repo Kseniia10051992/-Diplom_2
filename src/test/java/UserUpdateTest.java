@@ -51,6 +51,7 @@ public class UserUpdateTest extends GeneralTest {
                 {uniqueEmailCreate(), passwordCreate(), EMPTY, "email + password without name"},
                 {EMPTY, passwordCreate(), nameCreate(), "password + name without email"},
                 {uniqueEmailCreate(), EMPTY, nameCreate(), "email + name without password"}
+
         };
     }
 
@@ -64,6 +65,7 @@ public class UserUpdateTest extends GeneralTest {
 
         response.then().statusCode(HttpStatus.SC_OK)
                 .and().body(SUCCESS, equalTo(true));
+
 
     }
 
@@ -80,6 +82,7 @@ public class UserUpdateTest extends GeneralTest {
                 .and().body(SUCCESS, equalTo(false))
                 .and().body(MESSAGE, equalTo(MESSAGE_AUTHORISED));
     }
+
 
     private Map<String, String> createMap(String email, String password, String name) {
         Map<String, String> updateData = new HashMap<>();
@@ -107,7 +110,9 @@ public class UserUpdateTest extends GeneralTest {
                 RandomStringUtils.randomAlphabetic(3));
     }
     private static String passwordCreate() {
+
         return RandomStringUtils.randomAlphanumeric(8);
+
     }
 
     private static String nameCreate() {

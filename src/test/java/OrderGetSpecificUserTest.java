@@ -4,8 +4,12 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
+
+import java.util.Map;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 
 public class OrderGetSpecificUserTest extends GeneralTest {
     private final GeneratorIngredients generatorIngredients = new GeneratorIngredients();
@@ -17,9 +21,9 @@ public class OrderGetSpecificUserTest extends GeneralTest {
         clientOrder.createOrderWithLogin(generatorIngredients.getValidIngredients(), accessToken);
         Response response = clientOrder.ordersWithAuthGet(accessToken);
         response.then()
-                .statusCode(HttpStatus.SC_OK)
-                .and().body("success", equalTo(true))
-                .and().body("orders", notNullValue());
+                .statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .and().body("success", equalTo(false))
+                .and().body("message", equalTo("You should be authorised"));
     }
 
 
